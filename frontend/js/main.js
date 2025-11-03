@@ -286,6 +286,29 @@ let verificarPago = async () => {
     }
   }
 };
+let realizado = false;
+let verificarRealizado = async () => {
+  const user = cuentaLogeada;
+
+  const res = await fetch("http://10.13.123.186:3000/api/pagar", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify({
+      cuenta: user,
+    }),
+  });
+  const data = await res.json();
+
+  if (res.ok) {
+    const realizado = data.usuario.realizado;
+    if (realizado) {
+      realizado = true;
+    }
+  }
+};
 
 function mezclar(array) {
   let arr = [...array];
@@ -316,14 +339,14 @@ let revisarPreguntas = async (e) => {
   if (!res.ok) throw new Error(`Error del servidor: ${res.status}`);
   const data = await res.json();
 
-    console.log(res);
-    console.log("-");
-    console.log(data);
+  console.log(res);
+  console.log("-");
+  console.log(data);
 
-    if (data.certificado) {
-        const base = "http://10.13.123.186:3000";
-        window.open(base + data.certificado, "_blank");
-    }
+  if (data.certificado) {
+    const base = "http://10.13.123.186:3000";
+    window.open(base + data.certificado, "_blank");
+  }
 
   elementMain.textContent = "";
   elementMain.innerHTML = `
@@ -355,6 +378,19 @@ let iniciarExamen = async () => {
   if (cuentaLogeada) {
     await verificarPago();
     if (examenPagado) {
+      if (realizado) {
+        Swal.fire({
+          icon: "warning",
+          title: "Examen ya realizado",
+          text: "Solo puedes hacer el examen una vez.",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#f8bb86",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            buttonIniciarSesion.click();
+          }
+        });
+      }
       const res = await fetch(`${API}/start`, { method: "POST" });
       const data = await res.json();
       preguntas = data.questions;
@@ -383,14 +419,33 @@ let iniciarExamen = async () => {
     </div>
   `;
       });
-    formularioText += `<input value="Terminar examen"type="submit" id="button-terminar">
+      formularioText += `<input value="Terminar examen"type="submit" id="button-terminar">
   </form>`;
-  elementMain.innerHTML = formularioText;
+      elementMain.innerHTML = formularioText;
       document
         .getElementById("form-examen")
         .addEventListener("submit", revisarPreguntas);
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "Paga el examen para continuar",
+        text: "Para iniciar el examen debes pagarlo.",
+        confirmButtonText: "Ok",
+        confirmButtonColor: "#f8bb86",
+      });
     }
   } else {
+    Swal.fire({
+      icon: "warning",
+      title: "Inicia sesión para continuar",
+      text: "Para pagar el curso debes iniciar sesión primero.",
+      confirmButtonText: "Iniciar sesión",
+      confirmButtonColor: "#f8bb86",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        buttonIniciarSesion.click();
+      }
+    });
   }
 };
 
@@ -399,7 +454,7 @@ let cargarCertificaciones = () => {
     document.getElementById("container-iniciarSesion").style.display = "none";
     formularioActivo = false;
   }
-  
+
   elementMain.style.display = "block";
   elementMain.textContent = "";
   elementMain.innerHTML = paginas.get("certificaciones");
@@ -407,8 +462,13 @@ let cargarCertificaciones = () => {
   buttonPagarReact.addEventListener("click", pagarCurso);
   buttonIniciarExamen = document.getElementById("iniciarReact");
   buttonIniciarExamen.addEventListener("click", iniciarExamen);
-  if(examenPagado){
-   buttonPagarReact.style.display = "none"; 
+  verificarPago();
+  if (examenPagado) {
+    buttonPagarReact.style.display = "none";
+  }
+  verificarRealizado();
+  if (realizado) {
+    buttonIniciarExamen.style.display = "none";
   }
 };
 let cargarContacto = () => {
@@ -531,7 +591,7 @@ let actualizarUICerrarSesion = () => {
 };
 let cerrarSesion = async () => {
   try {
-    const res = await fetch("http://127.0.0.1:3000/api/logout", {
+    const res = await fetch("http://10.13.123.186:3000/api/logout", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -549,6 +609,7 @@ let cerrarSesion = async () => {
 
       cuentaLogeada = null;
       examenPagado = false;
+      realizado = false;
     } else {
       const data = await res.json();
       Swal.fire({
@@ -590,7 +651,6 @@ function checkSession() {
   if (userName) {
     actualizarUISesion(userName);
     cuentaLogeada = userName;
-    
   }
 }
 
