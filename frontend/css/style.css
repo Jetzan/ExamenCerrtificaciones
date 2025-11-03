@@ -1,0 +1,588 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    padding: 2vh 1vw;
+    background-color: #FFD44B;
+}
+.logo-container{
+
+}
+.logo-container #imagenLogo{
+    height: 8vh;
+    cursor: pointer;
+}
+.header-right{
+    display: flex;
+}
+.menu-container{
+    display: flex;
+    align-items: center;
+}
+.menu-container .list-menu{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    list-style: none;
+    height: 100%;;
+}
+.menu-container .list-menu .li-menu{
+    font-size: 1.3rem;
+    margin: 0 1vw;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+.menu-container .list-menu .li-menu:hover{
+    color: #333333;
+text-decoration: underline;
+}
+.menu-container .list-menu .li-menu i{
+    height: 100%;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+
+.header-right .user-container{
+    display: flex;
+    align-items: center;
+}
+
+main{
+    flex: 1;
+    background-color: #262626;
+    color: #F0F0F0;
+    padding: 6vh 2vw;
+    text-align: center;
+
+}
+.hero-inicio{
+    margin: 4vh 0;
+}
+.hero-inicio .eslogan{
+    font-size: 1.5rem;
+    margin-bottom: 2vh;
+}
+.hero-inicio .title-inicio{
+    font-size: 4rem;
+    margin-bottom: 3vh;
+}
+.hero-inicio #ver-certificaciones{
+    padding: 2vh 2vw;
+    font-size: 2rem;
+    cursor: pointer;
+    border-radius: 15px;
+    border: none;
+    background-color: #CC9900;
+    border: 2px solid transparent;
+}
+.hero-inicio #ver-certificaciones:hover{
+    background-color: #262626;
+    color:#CC9900;
+    border: 2px solid #CC9900;
+}
+
+
+
+.cards-main{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2vw;
+    margin: 10vh 0;
+}
+.cards-main .card-main{
+    background-color: #333333;
+    padding: 2vh 1vw;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;;
+}
+.cards-main .card-main img{
+    width: 15vw;
+    margin-bottom: 2vh;
+}
+
+
+
+.section-inicio{
+    display: flex;
+    flex-direction: row;
+    padding: 0 1vw;
+    justify-content: space-between;
+    margin: 4vh 0;
+}
+.section-inicio .section-inicio-left{
+    width: 50vw;
+}
+.section-inicio .section-inicio-left .porque-certifcarte{
+    font-size: 3.5rem;
+    text-align: left;
+    margin-bottom: 4vh;
+    font-weight: bold;
+}
+.section-inicio .section-inicio-left .porque-certifcarte span{
+    color: #FFD44B;
+}
+.section-inicio .section-inicio-left .info-empresa{
+    font-size: 2rem;
+    text-align: left;
+}
+.section-inicio .section-inicio-right img{
+    width: 40vw;
+}
+
+
+
+.info-certificaciones{
+    margin: 6vh 0;
+}
+.info-certificaciones h2{
+    font-size: 4rem;
+    margin-bottom: 2vh;
+}
+.info-certificaciones p{
+    font-size: 2.5rem;
+    margin-bottom: 4vh;
+}
+
+.certificaciones{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2vw;
+
+
+}
+.certificaciones .card-certificacion{
+    background-color: #333333;
+    padding: 2vh 1vw;
+    border-radius: 10px;
+    margin: 2vh 0;
+    text-align: center;
+}
+.certificaciones .card-certificacion h3{
+    font-size: 2rem;
+    margin-bottom: 2vh;
+}
+.certificaciones .card-certificacion p{
+    font-size: 1.5rem;
+    margin-bottom: 2vh;
+}
+.certificaciones .card-certificacion .list-ventajas{
+    list-style: disc;
+    margin-left: 2vw;
+    list-style-position: inside;
+}
+.certificaciones .card-certificacion .list-ventajas .li-ventaja{
+    font-size: 1.2rem;
+    margin: 1vh 0;
+}
+.certificaciones .card-certificacion .puntuacionMinima{
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 2vh;
+}
+
+.certificaciones .card-certificacion .tiempoExamen{
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 1vh;
+}
+
+.certificaciones .card-certificacion .costoExamen{
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 1vh;
+}
+.certificaciones .card-certificacion .btnPagar{
+    margin-top: 3vh;
+    padding: 1vh 2vw;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+    background-color: #CC9900;
+    border: 2px solid transparent;
+}
+.certificaciones .card-certificacion .btnPagar:hover{
+    background-color: #262626;
+    color:#CC9900;
+    border: 2px solid #CC9900;
+}
+.certificaciones .card-certificacion .btnIniciar{
+    margin-top: 3vh;
+    padding: 1vh 2vw;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+    background-color: #007bff;
+    border: 2px solid transparent;
+
+}
+.certificaciones .card-certificacion .btnIniciar:hover{
+    background-color: #262626;
+    color:#007bff;
+    border: 2px solid #007bff;
+}
+.certificaciones .card-certificacion .no-disponible{
+    color:#FFA500;
+    margin: 2vh 0;
+}
+
+
+
+
+
+.footer{
+    background-color: #262626;
+    border-top: 4vh solid #FFD44B;
+    padding: 2vh 1vw;
+    
+}
+
+.footer .container-footerTop{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vh;
+    gap: 1vw;
+    color: #FFD44B;
+}
+.footer .container-footerTop div p{
+    margin: 1vh 0;
+}
+
+.footer .container-footerTop .footer-eslogan{
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 45%;
+    color: white;
+}
+.footer .container-reservados{
+    text-align: center;
+    color: white;
+}
+
+.color-gold{
+    color: gold;
+}
+.pagar{
+    cursor: pointer;
+}
+.iniciar{
+    cursor: pointer;
+}
+
+
+
+
+
+
+#container-iniciarSesion{
+    display: none;
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #262626;
+    padding: 20vh 0;
+}
+#container-iniciarSesion img{
+    height: 40vh;
+
+}   
+#container-iniciarSesion div h2{
+    font-size: 3rem;
+    margin-bottom: 4vh;
+    color: white;
+}
+#container-iniciarSesion form{
+    display: grid;
+    gap: 2vh;
+    grid-template:"label1 input1"
+                "label2 input2"
+                "btn btn";
+}
+#labelForName,#labelForContrasena{
+    font-size: 1.5rem;
+    text-align: left;
+    margin-bottom: 1vh;
+    color: #CC9900;
+}
+#input-name,#input-contrasena{
+    padding: 1vh 1vw;
+    font-size: 1.2rem;
+    border-radius: 15px;
+    border: none;
+    width: 20vw;
+    background-color: transparent;
+    border:2px solid #CC9900;
+    color: white;
+}
+#input-name::selection, #input-contrasena::selection{
+    background-color: #CC9900;
+    color: black;
+}
+#input-name:focus, #input-contrasena:focus{
+    outline: none;
+    border-top:  2px solid transparent;
+    border-left: 2px solid transparent;
+    border-right:2px solid  transparent;
+    border-radius: 0;
+}
+
+#container-iniciarSesion form #labelForName{
+    grid-area: label1;
+}
+#container-iniciarSesion form #input-name{
+    grid-area: input1;
+}
+#container-iniciarSesion form #labelForContrasena{
+    grid-area: label2;
+
+}
+#container-iniciarSesion form #input-contrasena{
+    grid-area: input2;
+}
+#container-iniciarSesion form #button-enviarSesion{
+    grid-area: btn;
+    padding: 1vh 2vw;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+    background-color: #CC9900;
+    border: 2px solid transparent;
+}
+#container-iniciarSesion form #button-enviarSesion:hover{
+    background-color: #1b1b1b;
+    color:#CC9900;
+    border: 2px solid #CC9900;
+    transform: scale(1.1);
+    
+}
+
+
+
+.section-contacto{
+    padding: 6vh 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.section-contacto h2{
+    font-size: 4rem;
+    margin-bottom: 2vh;
+}
+.section-contacto h4{
+    font-size: 1.4rem;
+    margin-bottom: 4vh;
+}
+.section-contacto form{
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    align-items: flex-start;
+    width: 40vw;
+}
+.section-contacto form label{
+    font-size: 1.5rem;
+    color: #CC9900;
+}
+.section-contacto form input[type="text"],
+.section-contacto form input[type="email"]{
+    width: 100%;
+    padding: 1vh 1vw;
+    font-size: 1.2rem;
+    border-radius: 15px;
+    border: none;
+    background-color: transparent;
+    border:2px solid #CC9900;
+    color: white;
+}
+
+
+
+.section-contacto form textarea{
+    width: 100%;
+    height: 15vh;
+    padding: 1vh 1vw;
+    font-size: 1.2rem;
+    border-radius: 15px;
+    border: none;
+    background-color: transparent;
+    border:2px solid #CC9900;
+    color: white;
+    resize: none;
+}
+
+
+.section-contacto form input[type="submit"]{
+    padding: 1vh 2vw;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+    background-color: #CC9900;
+    border: 2px solid transparent;
+    cursor: pointer;
+    align-self: center;
+}
+
+.section-contacto form input[type="submit"]:hover{
+    background-color: #262626;
+    color:#CC9900;
+    border: 2px solid #CC9900;
+    transform: scale(1.1);
+    
+}
+
+
+
+
+
+
+
+
+
+.section-nosotros{
+    padding: 6vh 0;
+}
+.section-nosotros h2{
+    font-size: 4rem;
+    margin-bottom: 4vh;
+}
+.section-nosotros p{
+    font-size: 1.8rem;
+    margin: 8vh 0;
+}
+.section-nosotros .container-anfitriones-nosotros{
+    display: flex;
+    gap: 2vw;
+    justify-content: center;
+    margin: 10vh 0;
+}
+.section-nosotros .container-anfitriones-nosotros .card-anfitrion{
+    background-color: #333333;
+    padding: 2vh 1vw;
+    border-radius: 10px;
+    text-align: center;
+    width: 30vw;
+}
+.section-nosotros .container-anfitriones-nosotros .card-anfitrion h3{
+    font-size: 3rem;
+    margin: 3vh 0;
+}
+
+.section-nosotros .container-anfitriones-nosotros .card-anfitrion img{
+    width: 15vw;
+    border-radius: 50%;
+    margin-bottom: 2vh;
+}
+.section-nosotros .container-anfitriones-nosotros .card-anfitrion .descripcion-instructor{
+    font-size: 1.5rem;
+    text-align: left;
+}
+
+
+
+
+
+
+#button-cerrarSesion{
+    cursor: pointer;
+    display:none;
+}
+
+
+.card-question{
+    background-color: #333333;
+    padding: 2vh 1vw;
+    border-radius: 10px;
+    margin: 2vh 0;
+}
+.card-question p{
+    font-size: 2rem;
+    margin-bottom: 2vh;
+}
+.card-question label{
+    font-size: 1.5rem;
+    color: #CC9900;
+    cursor: pointer;
+}
+.card-question label input[type="radio"]{
+    margin-right: 1vw;
+}
+
+
+#button-terminar{
+    margin-top: 3vh;
+    padding: 1vh 2vw;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+    background-color: #CC9900;
+    border: 2px solid transparent;
+}
+#button-terminar:hover{
+    background-color: #262626;
+    color:#CC9900;
+    border: 2px solid #CC9900;
+}
+
+
+.title-revision{
+    font-size: 3rem;
+    margin-bottom: 4vh;
+}
+
+.card-revision{
+    background-color: #333333;
+    padding: 2vh 1vw;
+    border-radius: 10px;
+    margin: 2vh 0;
+}
+.card-revision .text-question-revision{
+    font-size: 2rem;
+    margin-bottom: 2vh;
+}
+
+.card-revision .respuesta-question-revision{
+    font-size: 1.5rem;
+    margin-bottom: 1vh;
+}
+.card-revision .correcta-question-revision{
+    font-size: 1.5rem;
+    margin-bottom: 1vh;
+}
+.card-revision .ok{
+    color: #00FF00;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.card-revision .bad{
+    color: #FF0000;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
