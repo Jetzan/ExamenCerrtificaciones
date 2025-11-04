@@ -277,10 +277,20 @@ main{
     width: 45%;
     color: white;
 }
+
+.footer .container-footerTop .red-social{
+    display: flex;
+    gap: 2vw;
+    font-size: 2rem;
+    margin: 1vh 0;
+}
 .footer .container-reservados{
     text-align: center;
     color: white;
 }
+
+
+
 
 .color-gold{
     color: gold;
@@ -512,6 +522,21 @@ main{
 #button-cerrarSesion{
     cursor: pointer;
     display:none;
+}
+
+
+
+.title-certifiacion-examen{
+    font-size: 3rem;
+    margin-bottom: 2vh;
+}
+.completa-certificacion{
+    font-size: 2rem;
+    margin-bottom: 1vh;
+}
+.time-examen,.total-questions-examen,.score-examen,.fecha-examen{
+    font-size: 1.5rem;
+    margin-bottom: 1vh;
 }
 
 

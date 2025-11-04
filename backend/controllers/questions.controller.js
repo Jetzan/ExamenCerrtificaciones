@@ -144,7 +144,7 @@ function generarCertificado(nombre, promedio) {
     doc.moveDown();
     doc.fontSize(14).text(`Con un puntaje de ${promedio.toFixed(2)} puntos.`, { align: "center" });
     doc.moveDown(3);
-    doc.fontSize(12).text(`Fecha de emisión: ${new Date().toLocaleString()}`, { align: "center" });
+    doc.fontSize(12).text(`Emitido en Aguascalientes, el ${new Date().toLocaleString()}`, { align: "center" });
     doc.moveDown(2);
 
     // Firma

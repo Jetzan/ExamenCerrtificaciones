@@ -16,7 +16,7 @@ let cuentaLogeada;
 let examenPagado = false;
 
 
-const API = "http://10.13.123.186:3000/api/questions";
+const API = "http://localhost:3000/api/questions";
 
 const paginas = new Map();
 paginas.set(
@@ -214,7 +214,7 @@ let pagarCursoBack = async () => {
   if (cuentaLogeada) {
     const user = cuentaLogeada;
 
-    const res = await fetch("http://10.13.123.186:3000/api/pagar", {
+    const res = await fetch("http://localhost:3000/api/pagar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -269,7 +269,7 @@ let pagarCurso = () => {
 let verificarPago = async () => {
   const user = cuentaLogeada;
 
-  const res = await fetch("http://10.13.123.186:3000/api/verificar", {
+  const res = await fetch("http://localhost:3000/api/verificar", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -296,7 +296,7 @@ let verificarRealizado = async () => {
 
  
 
-  const res = await fetch("http://10.13.123.186:3000/api/realizado", {
+  const res = await fetch("http://localhost:3000/api/realizado", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -355,7 +355,7 @@ let revisarPreguntas = async (e) => {
   console.log(data);
 
   if (data.certificado) {
-    const base = "http://10.13.123.186:3000";
+    const base = "http://localhost:3000";
     window.open(base + data.certificado, "_blank");
   }
 
@@ -409,7 +409,16 @@ let iniciarExamen = async () => {
 
         elementMain.textContent = "";
         console.log(preguntas);
-        let formularioText = `<form id="form-examen">`;
+        let iterador=1;
+        let formularioText = `
+        <h2 class="title-certifiacion-examen">Examen de certificación - React.js</h2>
+        <h3 class="completa-certificacion">Instrucciones: Selecciona la respuesta correcta para cada pregunta y luego presiona "Terminar examen" para enviar tus respuestas.</h3>
+        <h3 class="time-examen">Tiempo restante: 60 minutos</h3>
+        <h3 class="total-questions-examen">Total de preguntas: ${preguntas.length}</h3>
+        <h3 class="score-examen">Puntuación mínima para aprobar: 70%</h3>
+        <h4 class="fecha-examen">Fecha de examen: ${new Date().toLocaleDateString()}</h4>
+        `;
+         formularioText += `<form id="form-examen">`;
         preguntas.forEach((q) => {
           // Mezclamos las opciones antes de mostrarlas
           const opcionesAleatorias = mezclar(q.options);
@@ -417,7 +426,7 @@ let iniciarExamen = async () => {
           // Mostramos la pregunta
           formularioText += `
     <div class="card-question">
-      <p class="question-text">${q.text}</p>
+      <p class="question-text">${iterador}${q.text}</p>
       ${opcionesAleatorias
         .map(
           (opt) => `
@@ -430,6 +439,7 @@ let iniciarExamen = async () => {
         .join("")}
     </div>
   `;
+  iterador++;
         });
         formularioText += `<input value="Terminar examen"type="submit" id="button-terminar">
   </form>`;
@@ -484,8 +494,18 @@ let cargarCertificaciones =async () => {
   realizado=false;
    await verificarRealizado();
   if (realizado) {
-    buttonIniciarExamen.style.display = "none";
-  }
+  // Mantener visible el botón, pero avisar al hacer clic
+  buttonIniciarExamen.addEventListener("click", () => {
+    Swal.fire({
+      icon: "info",
+      title: "Examen ya realizado",
+      text: "Ya completaste este examen. Solo puedes hacerlo una vez.",
+      confirmButtonText: "Entendido",
+      confirmButtonColor: "#4CAF50",
+    });
+  });
+}
+
 };
 
 let enviarMensaje = async (e) => {
@@ -505,7 +525,7 @@ let enviarMensaje = async (e) => {
   }
 
   try {
-    const res = await fetch("http://10.13.123.186:3000/api/comentarios", {
+    const res = await fetch("http://localhost:3000/api/comentarios", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -596,7 +616,7 @@ formInicio.addEventListener("submit", async (e) => {
   const contrasenaInput = document.getElementById("input-contrasena").value;
 
   try {
-    const res = await fetch("http://10.13.123.186:3000/api/login", {
+    const res = await fetch("http://localhost:3000/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -675,7 +695,7 @@ let actualizarUICerrarSesion = () => {
 };
 let cerrarSesion = async () => {
   try {
-    const res = await fetch("http://10.13.123.186:3000/api/logout", {
+    const res = await fetch("http://localhost:3000/api/logout", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
