@@ -16,7 +16,7 @@ let cuentaLogeada;
 let examenPagado = false;
 
 
-const API = "http://localhost:3000/api/questions";
+const API = "http://10.13.123.186:3000/api/questions";
 
 const paginas = new Map();
 paginas.set(
@@ -214,7 +214,7 @@ let pagarCursoBack = async () => {
   if (cuentaLogeada) {
     const user = cuentaLogeada;
 
-    const res = await fetch("http://localhost:3000/api/pagar", {
+    const res = await fetch("http://10.13.123.186:3000/api/pagar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -269,7 +269,7 @@ let pagarCurso = () => {
 let verificarPago = async () => {
   const user = cuentaLogeada;
 
-  const res = await fetch("http://localhost:3000/api/verificar", {
+  const res = await fetch("http://10.13.123.186:3000/api/verificar", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -296,7 +296,7 @@ let verificarRealizado = async () => {
 
  
 
-  const res = await fetch("http://localhost:3000/api/realizado", {
+  const res = await fetch("http://10.13.123.186:3000/api/realizado", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -355,7 +355,7 @@ let revisarPreguntas = async (e) => {
   console.log(data);
 
   if (data.certificado) {
-    const base = "http://localhost:3000";
+    const base = "http://10.13.123.186:3000";
     window.open(base + data.certificado, "_blank");
   }
 
@@ -525,7 +525,7 @@ let enviarMensaje = async (e) => {
   }
 
   try {
-    const res = await fetch("http://localhost:3000/api/comentarios", {
+    const res = await fetch("http://10.13.123.186:3000/api/comentarios", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -616,7 +616,7 @@ formInicio.addEventListener("submit", async (e) => {
   const contrasenaInput = document.getElementById("input-contrasena").value;
 
   try {
-    const res = await fetch("http://localhost:3000/api/login", {
+    const res = await fetch("http://10.13.123.186:3000/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -695,7 +695,7 @@ let actualizarUICerrarSesion = () => {
 };
 let cerrarSesion = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/logout", {
+    const res = await fetch("http://10.13.123.186:3000/api/logout", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

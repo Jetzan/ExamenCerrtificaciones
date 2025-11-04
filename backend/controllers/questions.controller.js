@@ -147,19 +147,42 @@ function generarCertificado(nombre, promedio) {
     doc.fontSize(12).text(`Emitido en Aguascalientes, el ${new Date().toLocaleString()}`, { align: "center" });
     doc.moveDown(2);
 
-    // Firma
-    const firmaPath = path.join(__dirname, "../images/firma.png");
-    if (fs.existsSync(firmaPath)) {
-        const pageWidth = doc.page.width;
-        const imageWidth = 120;
-        const xPosition = (pageWidth - imageWidth) / 2;
 
-        doc.image(firmaPath, xPosition, doc.y, { fit: [120, 120] });
-        doc.moveDown(2);
-    }
 
-    doc.fontSize(12).text("__________________________", { align: "center" });
-    doc.fontSize(12).text("Ángel Andrade, CEO", { align: "center" });
+
+    // Firma del Instructor
+const firmaInstructorPath = path.join(__dirname, "../images/firma.png");
+if (fs.existsSync(firmaInstructorPath)) {
+    const pageWidth = doc.page.width;
+    const imageWidth = 120;
+    const xPosition = (pageWidth - imageWidth) / 2;
+
+    doc.image(firmaInstructorPath, xPosition, doc.y, { fit: [120, 120] });
+    doc.moveDown(2);
+}
+
+doc.fontSize(12).text("__________________________", { align: "center" });
+doc.fontSize(12).text("Ángel Andrade, Instructor", { align: "center" });
+
+// Espacio entre firmas
+doc.moveDown(2);
+
+// Firma del CEO
+const firmaCEOPath = path.join(__dirname, "../images/firmaHugo.png");
+if (fs.existsSync(firmaCEOPath)) {
+    const pageWidth = doc.page.width;
+    const imageWidth = 120;
+    const xPosition = (pageWidth - imageWidth) / 2;
+
+    doc.image(firmaCEOPath, xPosition, doc.y, { fit: [120, 120] });
+    doc.moveDown(2);
+}
+
+doc.fontSize(12).text("__________________________", { align: "center" });
+doc.fontSize(12).text("Hugo Delgado, CEO", { align: "center" });
+
+
+
 
     doc.moveDown(6);
     doc.fontSize(12).text("Avalado por la Secretaría de Educación Pública (SEP).", { align: "center" });
