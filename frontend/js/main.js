@@ -15,6 +15,9 @@ let buttonEnviarSesion;
 let cuentaLogeada;
 let examenPagado = false;
 
+
+const API = "http://10.13.123.186:3000/api/questions";
+
 const paginas = new Map();
 paginas.set(
   "inicio",
@@ -147,7 +150,7 @@ paginas.set(
         <label for="input-correo">Correo:</label><input type="email" id="input-correo" placeholder="Ingresa tu correo">
         <label for="input-mensaje">Mensaje</label>
         <textarea name="mensaje" id="input-mensaje" placeholder="Ingresa tu mensaje"></textarea>
-        <input type="submit" value="Enviar">
+        <input id="enviar-mensaje" type="submit" value="Enviar">
     </form>
 </section>`
 );
@@ -210,7 +213,6 @@ let formularioActivo = false;
 let pagarCursoBack = async () => {
   if (cuentaLogeada) {
     const user = cuentaLogeada;
-    let ban = false;
 
     const res = await fetch("http://10.13.123.186:3000/api/pagar", {
       method: "POST",
@@ -267,7 +269,7 @@ let pagarCurso = () => {
 let verificarPago = async () => {
   const user = cuentaLogeada;
 
-  const res = await fetch("http://10.13.123.186:3000/api/pagar", {
+  const res = await fetch("http://10.13.123.186:3000/api/verificar", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -278,10 +280,12 @@ let verificarPago = async () => {
     }),
   });
   const data = await res.json();
-
   if (res.ok) {
     const pago = data.usuario.pago;
-    if (pago) {
+    if(pago=="false"){
+      return;
+    }
+    if (pago ) {
       examenPagado = true;
     }
   }
@@ -290,7 +294,9 @@ let realizado = false;
 let verificarRealizado = async () => {
   const user = cuentaLogeada;
 
-  const res = await fetch("http://10.13.123.186:3000/api/pagar", {
+ 
+
+  const res = await fetch("http://10.13.123.186:3000/api/realizado", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -303,9 +309,14 @@ let verificarRealizado = async () => {
   const data = await res.json();
 
   if (res.ok) {
-    const realizado = data.usuario.realizado;
-    if (realizado) {
-      realizado = true;
+    const realizadoBack = data.usuario.realizado;
+    console.log(realizadoBack);
+    console.log(realizado);
+    if (realizadoBack=="false") {
+      realizado = false;
+      return;
+    }else{
+      realizado=true;
     }
   }
 };
@@ -371,9 +382,10 @@ let revisarPreguntas = async (e) => {
           )
           .join("")}
     `;
+
 };
 
-const API = "http://10.13.123.186:3000/api/questions";
+
 let iniciarExamen = async () => {
   if (cuentaLogeada) {
     await verificarPago();
@@ -390,20 +402,20 @@ let iniciarExamen = async () => {
             buttonIniciarSesion.click();
           }
         });
-      }
-      const res = await fetch(`${API}/start`, { method: "POST" });
-      const data = await res.json();
-      preguntas = data.questions;
+      } else {
+        const res = await fetch(`${API}/start`, { method: "POST" });
+        const data = await res.json();
+        preguntas = data.questions;
 
-      elementMain.textContent = "";
-      console.log(preguntas);
-      let formularioText = `<form id="form-examen">`;
-      preguntas.forEach((q) => {
-        // Mezclamos las opciones antes de mostrarlas
-        const opcionesAleatorias = mezclar(q.options);
+        elementMain.textContent = "";
+        console.log(preguntas);
+        let formularioText = `<form id="form-examen">`;
+        preguntas.forEach((q) => {
+          // Mezclamos las opciones antes de mostrarlas
+          const opcionesAleatorias = mezclar(q.options);
 
-        // Mostramos la pregunta
-        formularioText += `
+          // Mostramos la pregunta
+          formularioText += `
     <div class="card-question">
       <p class="question-text">${q.text}</p>
       ${opcionesAleatorias
@@ -418,13 +430,14 @@ let iniciarExamen = async () => {
         .join("")}
     </div>
   `;
-      });
-      formularioText += `<input value="Terminar examen"type="submit" id="button-terminar">
+        });
+        formularioText += `<input value="Terminar examen"type="submit" id="button-terminar">
   </form>`;
-      elementMain.innerHTML = formularioText;
-      document
-        .getElementById("form-examen")
-        .addEventListener("submit", revisarPreguntas);
+        elementMain.innerHTML = formularioText;
+        document
+          .getElementById("form-examen")
+          .addEventListener("submit", revisarPreguntas);
+      }
     } else {
       Swal.fire({
         icon: "warning",
@@ -449,7 +462,7 @@ let iniciarExamen = async () => {
   }
 };
 
-let cargarCertificaciones = () => {
+let cargarCertificaciones =async () => {
   if (formularioActivo) {
     document.getElementById("container-iniciarSesion").style.display = "none";
     formularioActivo = false;
@@ -462,15 +475,84 @@ let cargarCertificaciones = () => {
   buttonPagarReact.addEventListener("click", pagarCurso);
   buttonIniciarExamen = document.getElementById("iniciarReact");
   buttonIniciarExamen.addEventListener("click", iniciarExamen);
-  verificarPago();
+  examenPagado = false;
+  await verificarPago();
+  console.log(examenPagado);
   if (examenPagado) {
     buttonPagarReact.style.display = "none";
   }
-  verificarRealizado();
+  realizado=false;
+   await verificarRealizado();
   if (realizado) {
     buttonIniciarExamen.style.display = "none";
   }
 };
+
+let enviarMensaje = async (e) => {
+  e.preventDefault();
+  let nombreUser = document.getElementById("input-nombre").value.trim();
+  let correoUser = document.getElementById("input-correo").value.trim();
+  let mensajeUser = document.getElementById("input-mensaje").value.trim();
+
+  if (!nombreUser || !correoUser || !mensajeUser) {
+    Swal.fire({
+      icon: "warning",
+      title: "Campos vacíos",
+      text: "Por favor llena todos los campos antes de enviar.",
+      confirmButtonColor: "#f8bb86",
+    });
+    return;
+  }
+
+  try {
+    const res = await fetch("http://10.13.123.186:3000/api/comentarios", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cuenta: nombreUser,
+        correo: correoUser,
+        mensaje: mensajeUser,
+      }),
+    });
+
+    // Esperar la respuesta JSON
+    const data = await res.json();
+    console.log("Respuesta del servidor:", data);
+    if (res.ok) {
+      await Swal.fire({
+        icon: "success",
+        title: "Comentario Enviado",
+        text: "Tu comentario se envió con éxito",
+        confirmButtonText: "Continuar",
+        confirmButtonColor: "#4CAF50",
+      });
+
+      // Limpia los campos
+      document.getElementById("input-nombre").value = "";
+      document.getElementById("input-correo").value = "";
+      document.getElementById("input-mensaje").value = "";
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Error al enviar",
+        text: data?.error ?? "Ocurrió un error al enviar tu comentario.",
+        confirmButtonColor: "#e53935",
+      });
+    }
+  } catch (error) {
+    console.error("Error de conexión:", error);
+    Swal.fire({
+      icon: "error",
+      title: "Error de conexión",
+      text: "No se pudo conectar con el servidor.",
+      confirmButtonColor: "#e53935",
+    });
+  }
+};
+
+
 let cargarContacto = () => {
   if (formularioActivo) {
     document.getElementById("container-iniciarSesion").style.display = "none";
@@ -479,6 +561,8 @@ let cargarContacto = () => {
   elementMain.style.display = "block";
   elementMain.textContent = "";
   elementMain.innerHTML = paginas.get("contacto");
+  document.getElementById("form-contacto").addEventListener("submit",enviarMensaje);
+
 };
 let cargarNosotros = () => {
   elementMain.textContent = "";

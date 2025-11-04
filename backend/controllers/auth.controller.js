@@ -79,6 +79,30 @@ exports.payCert = (req, res) => {
 
   user.pago = true;
 
+
+
+  return res.status(200).json({
+    mensaje: "Pago registrado correctamente",
+    usuario: { 
+      cuenta: user.cuenta, 
+      pago: user.pago 
+    }
+  });
+};
+exports.verifyPay = (req, res) => {
+  const userId = req.userId; 
+
+  const user = users.find(u => u.cuenta === userId);
+
+  if (!user) {
+    return res.status(404).json({ 
+      error: "Usuario no encontrado" 
+    });
+  }
+
+
+
+  
   return res.status(200).json({
     mensaje: "Pago registrado correctamente",
     usuario: { 
