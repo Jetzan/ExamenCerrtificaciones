@@ -21,6 +21,8 @@ app.use(express.json());
 const ALLOWED_ORIGINS = [
   'http://localhost:5500',
   'http://127.0.0.1:5500',
+  'http://10.13.122.137:5500',
+  'http://10.13.124.141:5500'
 ];
 
 // Ruta de salud

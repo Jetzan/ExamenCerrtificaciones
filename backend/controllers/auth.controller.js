@@ -67,9 +67,9 @@ exports.getProfile = (req, res) => {
 };
 
 exports.payCert = (req, res) => {
-  const userId = req.userId; 
+  let userId = req.userId; 
 
-  const user = users.find(u => u.cuenta === userId);
+  let user = users.find(u => u.cuenta === userId);
 
   if (!user) {
     return res.status(404).json({ 
@@ -79,7 +79,25 @@ exports.payCert = (req, res) => {
 
   user.pago = true;
 
+  return res.status(200).json({
+    mensaje: "Pago registrado correctamente",
+    usuario: { 
+      cuenta: user.cuenta, 
+      pago: user.pago 
+    }
+  });
+};
 
+exports.verifyPay = (req, res) => {
+  let userId = req.userId; 
+
+  let user = users.find(u => u.cuenta === userId);
+
+  if (!user) {
+    return res.status(404).json({ 
+      error: "Usuario no encontrado" 
+    });
+  }
 
   return res.status(200).json({
     mensaje: "Pago registrado correctamente",
@@ -89,25 +107,34 @@ exports.payCert = (req, res) => {
     }
   });
 };
-exports.verifyPay = (req, res) => {
-  const userId = req.userId; 
 
-  const user = users.find(u => u.cuenta === userId);
+exports.verifyDone = (req, res) => {
+  let userId = req.userId; 
+
+  let user = users.find(u => u.cuenta === userId);
 
   if (!user) {
     return res.status(404).json({ 
       error: "Usuario no encontrado" 
     });
   }
-
-
-
-  
   return res.status(200).json({
-    mensaje: "Pago registrado correctamente",
+    mensaje: "El examen se ha realizado",
     usuario: { 
       cuenta: user.cuenta, 
-      pago: user.pago 
+      realizado: user.realizado 
     }
+  });
+};
+
+const commentsVec = [];
+
+exports.comments = (req, res) => {
+  commentsVec.push(req.body);
+
+  console.log(commentsVec);
+
+  return res.status(200).json({
+    mensaje: "Comentario guardado"
   });
 };

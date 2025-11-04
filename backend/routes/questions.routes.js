@@ -4,7 +4,7 @@ const router = express.Router();
 const path = require("path");
 const fs = require("fs");
 
-const { iniciarCertificado, enviarRespuestas ,verifyDone} = require("../controllers/questions.controller");
+const { iniciarCertificado, enviarRespuestas } = require("../controllers/questions.controller");
 
 // POST que envía preguntas
 router.post("/start", iniciarCertificado);
@@ -23,8 +23,5 @@ router.get("/certificado/:file", (req, res) => {
     res.status(404).json({ message: "Archivo no encontrado" });
   }
 });
-
-
-router.post("/VerificarRealizado",verifyDone);
 
 module.exports = router; 
